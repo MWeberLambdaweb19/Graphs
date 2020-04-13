@@ -17,15 +17,26 @@ class Graph:
 
     def add_edge(self, v1, v2):
         """
-        Add a directed edge to the graph.
+        Add a directed edge to the graph from v1 to v2.
         """
-        
+        # Check if the vertices exist
+        if v1 in self.vertices and v2 in self.vertices:
+            # Add the edge
+            self.vertices[v1].add(v2)
+        else:
+            print("ERROR: Could not add edge, vertex not found")
 
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
+        # try:
+        if vertex_id in self.vertices:
+            return self.vertices[vertex_id]
+        else:
+            return None
+                # except ValueError
+                # print(f"Vertex_id: {vertex_id} does not exist in the Graph vertices")
 
     def bft(self, starting_vertex):
         """
