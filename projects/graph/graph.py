@@ -88,14 +88,46 @@ class Graph:
                     new_path.append(next_vert)
                     st.push(new_path)
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, visited=set()):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        pass  # TODO
+        if starting_vertex in visited:
+            return
+        else: 
+            visited.add(starting_vertex)
+            print(starting_vertex)
+            flanders = self.get_neighbors(starting_vertex)
+            for neighborino in flanders:
+                self.dft_recursive(neighborino, visited)
+        # print(starting_vertex)
+        # st = Stack()
+        # st.push(starting_vertex)
+        # if starting_vertex not in st.stack:
+        #     hiddidly_ho = self.get_neighbors(starting_vertex)
+        #     for neighborino in hiddidly_ho:
+        #         self.dft_recursive(neighborino) 
+        # else:
+        #     breakpoint()
+        #     return 
+        # st = Stack()
+        # st.push([starting_vertex])
+        # visited = set()
+        # path = st.pop()
+        # visited.add(path[-1])
+        # recurring = self.get_neighbors(path[-1])
+        # # breakpoint()
+        # for neighborino in recurring:
+        #     print(neighborino)
+        #     print(visited)
+        #     if neighborino not in visited:
+        #         self.dft_recursive(neighborino)
+        #     else:
+        #         return 
+    
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -103,6 +135,11 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
+        if starting_vertex == destination_vertex:
+            return starting_vertex
+        else:
+            qq = Queue()
+            qq.enqueue(starting_vertex)
         pass  # TODO
 
     def dfs(self, starting_vertex, destination_vertex):
