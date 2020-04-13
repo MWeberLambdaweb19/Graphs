@@ -140,7 +140,7 @@ class Graph:
         ## Understand
         # I want the shortest path from starting vertex to destination
         # breadth-first, which means a stack
-        ### Notes from Breadth First Search
+        ### Notes from Breadth First Search video
         # Must explore all possible paths to find the shortest
         # Traverse across before down 
         # Does not revisit nodes
@@ -178,6 +178,10 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
+        ### Notes from Depth First Search video
+        # Must explore all possible paths to find the shortest
+        # Traverse down before across
+        # Does not revisit nodes
         st = Stack()
         st.push([starting_vertex])
         visited = set()
@@ -195,7 +199,7 @@ class Graph:
                         new_path.append(neighborino)
                         st.push(new_path)
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
+    def dfs_recursive(self, starting_vertex, destination_vertex, path=[], visited=set()):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -203,7 +207,23 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+        ### Notes from Depth First Search video
+        # Must explore all possible paths to find the shortest
+        # Traverse down before across
+        # Does not revisit nodes
+        if starting_vertex in visited:
+            cat = "cat"
+            return cat
+        else:
+            if starting_vertex == destination_vertex:
+                path.append(starting_vertex)
+                cat = "cat"
+                return cat
+            else:
+                visited.add(starting_vertex)
+                path.append(starting_vertex)
+            for neighborino in self.get_neighbors(starting_vertex): 
+                self.dfs_recursive(neighborino, destination_vertex, path, visited)
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
