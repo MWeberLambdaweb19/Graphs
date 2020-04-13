@@ -42,15 +42,51 @@ class Graph:
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
+        BREADTH FIRST USES QUEUE
         """
-        pass  # TODO
+        # Create a queue and enqueue starting vertex
+        qq = Queue()
+        qq.enqueue([starting_vertex])
+        # test = "hello"
+        # breakpoint()
+        # pdb.set_trace()
+        # Create a set of traversed vertices
+        visited = set()
+        # While queue is not empty:
+        while qq.size() > 0:
+            # dequeue/pop first vertex
+            path = qq.dequeue()
+            # if not visited
+            if path[-1] not in visited:
+                # PRINT IT
+                print(path[-1])
+                # mark as visited
+                visited.add(path[-1]) 
+                # enqueue neighbors
+                for next_vert in self.get_neighbors(path[-1]):
+                    new_path = list(path)
+                    new_path.append(next_vert)
+                    qq.enqueue(new_path)
+
 
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
+        DEPTH FIRST USES STACK
         """
-        pass  # TODO
+        st = Stack()
+        st.push([starting_vertex])
+        visited = set()
+        while st.size() > 0:
+            path = st.pop()
+            if path[-1] not in visited:
+                print(path[-1])
+                visited.add(path[-1])
+                for next_vert in self.get_neighbors(path[-1]):
+                    new_path = list(path)
+                    new_path.append(next_vert)
+                    st.push(new_path)
 
     def dft_recursive(self, starting_vertex):
         """
