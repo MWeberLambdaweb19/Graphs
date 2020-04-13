@@ -67,7 +67,7 @@ class Graph:
                     new_path = list(path)
                     new_path.append(next_vert)
                     qq.enqueue(new_path)
-
+                   
 
     def dft(self, starting_vertex):
         """
@@ -134,12 +134,42 @@ class Graph:
         Return a list containing the shortest path from
         starting_vertex to destination_vertex in
         breath-first order.
+        
+        Breadth-first uses Queues. BQ!
         """
-        if starting_vertex == destination_vertex:
-            return starting_vertex
-        else:
-            qq = Queue()
-            qq.enqueue(starting_vertex)
+        ## Understand
+        # I want the shortest path from starting vertex to destination
+        # breadth-first, which means a stack
+        ### Notes from Breadth First Search
+        # Must explore all possible paths to find the shortest
+        # Traverse across before down 
+        # Does not revisit nodes
+
+        qt = Queue()
+        qt.enqueue([starting_vertex])
+        visited = set()
+        while qt.size() > 0:
+            path = qt.dequeue()
+            if path[-1] not in visited:
+                visited.add(path[-1])
+                for neighborino in self.get_neighbors(path[-1]):
+                    if neighborino == destination_vertex:
+                        new_path = list(path)
+                        new_path.append(neighborino)
+                        return new_path
+                    else:
+                        new_path = list(path)
+                        new_path.append(neighborino)
+                        qt.enqueue(new_path)
+
+
+        # qt = Queue()
+        # qt.enqueue([starting_vertex])
+        # visited = set()
+        # while qt.size() > 0:
+        #     path = qt.dequeue()
+        #     if path[-1] not in visited:
+        #         visited.add(path[-1])
         pass  # TODO
 
     def dfs(self, starting_vertex, destination_vertex):
