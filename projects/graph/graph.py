@@ -68,7 +68,6 @@ class Graph:
                     new_path.append(next_vert)
                     qq.enqueue(new_path)
                    
-
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
@@ -152,7 +151,6 @@ class Graph:
         #     else:
         #         return 
     
-
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
@@ -190,7 +188,6 @@ class Graph:
                     new_path.append(neighborino)
                     qt.enqueue(new_path)
 
-
         # qt = Queue()
         # qt.enqueue([starting_vertex])
         # visited = set()
@@ -198,7 +195,6 @@ class Graph:
         #     path = qt.dequeue()
         #     if path[-1] not in visited:
         #         visited.add(path[-1])
-        pass  # TODO
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -216,16 +212,18 @@ class Graph:
         while st.size() > 0:
             path = st.pop()
             if path[-1] not in visited:
+                if path[-1] == destination_vertex:
+                    return path
                 visited.add(path[-1])
                 for neighborino in self.get_neighbors(path[-1]):
-                    if neighborino == destination_vertex:
-                        new_path = list(path)
-                        new_path.append(neighborino)
-                        return new_path
-                    else:
-                        new_path = list(path)
-                        new_path.append(neighborino)
-                        st.push(new_path)
+                    # if neighborino == destination_vertex:
+                    #     new_path = list(path)
+                    #     new_path.append(neighborino)
+                    #     return new_path
+                    # else:
+                    new_path = list(path)
+                    new_path.append(neighborino)
+                    st.push(new_path)
 
     def dfs_recursive(self, starting_vertex, destination_vertex, path=None, visited=None):
         """
