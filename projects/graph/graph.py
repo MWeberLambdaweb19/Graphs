@@ -225,7 +225,27 @@ class Graph:
                     new_path.append(neighborino)
                     st.push(new_path)
 
+    # def dfs_recursive(self, starting_vertex, destination_vertex, visited=None, path=None):
+    #     # CLASS VERSION
+    #     if visited is None:
+    #         visited = set()
+
+    #     if path is None:
+    #         path = [] # or list()
+
+    #     visited.add(starting_vertex)
+    #     new_path = path + [starting_vertex]
+
+    #     if starting_vertex == destination_vertex:
+    #         return new_path
+
+    #     for neighbor in self.vertices[starting_vertex]:
+    #         if neighbor not in visited:
+    #             neighbor_path = self.dfs_recursive(neighbor, destination_vertex, visited, new_path)
+    #             if neighbor_path:
+    #                 return neighbor_path
     def dfs_recursive(self, starting_vertex, destination_vertex, path=None, visited=None):
+        # MINE! DOESN'T WORK!
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -238,23 +258,24 @@ class Graph:
         # Traverse down before across
         # Does not revisit nodes
         if path is None:
-            path = []
+            path = list()
         if visited is None:
             visited = set()
         if starting_vertex not in visited:
             visited.add(starting_vertex)
-            path.append(starting_vertex)
+            # THIS WAS AN ISSUE: I WAS NOT COPYING MY PATH
+            path = path + [starting_vertex]
             if starting_vertex == destination_vertex:
                 return path
         
             for neighborino in self.get_neighbors(starting_vertex):
                 cat = self.dfs_recursive(neighborino, destination_vertex, path, visited)
-                if cat is None:
-                    pass
-                else:
-                    self.dfs_recursive(neighborino, destination_vertex, path, visited)
-        if starting_vertex in visited:
-            return None
+                if cat:
+                    # HAD TO RETURN THIS IF IT EXISTS
+                    return cat
+
+    #     if starting_vertex in visited:
+    #         return None
 
         # if destination_vertex in self.get_neighbors(starting_vertex):
         #     new_path = path + [starting_vertex]
