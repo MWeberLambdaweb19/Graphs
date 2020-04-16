@@ -1,3 +1,5 @@
+from graph import Graph
+
 # Scrap paper and notes for graphs week!
 
 # Day Two
@@ -90,3 +92,56 @@ def get_islands(islands):
 #                     islands += 1
 
 #     return islands
+
+# Day Two
+
+def word_transformation(begin_word, end_word):
+    # Given two words, make each lower case
+    # Compare the lengths of each word, if they're the same, continue with transformation, if not, return an error
+    # add edges of same length to the begin_word, from the first letter of beginning word to first letter of ending word
+    # store words of similar length in a hash table
+    # each transformed word must be a real word
+    # helper function to see if words are 1 letter different
+    # if begin_word is end_word, return path
+    # bfs (breadth first search) will get us to the result
+
+    begin_word = begin_word.lower()
+    end_word = end_word.lower()
+
+    # Base cases
+    if len(begin_word) != len(end_word):
+        return None
+    if begin_word == end_word:
+        return [end_word]
+    
+    # Setting up words
+    word = open("words.txt", "r")
+    wordrl = word.readlines()
+    storage = set()
+    for i in wordrl:
+        if len(i) == len(begin_word):
+            storage.add(i.lower())
+    word.close()
+
+    # Setting up graph
+    graph = Graph()
+    graph.add_vertex(begin_word)
+    graph.add_vertex(end_word)
+    for i in storage:
+        graph.add_vertex(i)
+        for i in storage:
+            pass
+
+    graph.bfs(begin_word, end_word)
+
+    def helper_func(word_one, word_two):
+        counter = 0
+        for i in range(0, word_one):
+            if word_one[i] != word_two[i]:
+                counter += 1
+        if counter == 1:
+            return True
+        else:
+            return False
+
+            
