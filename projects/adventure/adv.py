@@ -8,6 +8,8 @@ from ast import literal_eval
 # Load world
 world = World()
 
+# Use combination of breadth first and depth first
+
 
 # You may uncomment the smaller graphs for development and testing purposes.
 # map_file = "maps/test_line.txt"

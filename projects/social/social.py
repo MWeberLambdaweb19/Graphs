@@ -1,6 +1,12 @@
+import random
+from util import Queue
+
 class User:
     def __init__(self, name):
         self.name = name
+
+    def __repr__(self):
+        return self.name
 
 class SocialGraph:
     def __init__(self):
@@ -13,12 +19,15 @@ class SocialGraph:
         Creates a bi-directional friendship
         """
         if user_id == friend_id:
-            print("WARNING: You cannot be friends with yourself")
+            # print("WARNING: You cannot be friends with yourself")
+            return False
         elif friend_id in self.friendships[user_id] or user_id in self.friendships[friend_id]:
-            print("WARNING: Friendship already exists")
+            # print("WARNING: Friendship already exists")
+            return False
         else:
             self.friendships[user_id].add(friend_id)
             self.friendships[friend_id].add(user_id)
+            return True
 
     def add_user(self, name):
         """
@@ -45,8 +54,45 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
+        for i in range(0, num_users):
+            self.add_user(f"User {i+1}")
+
+        # New hotness
+        # Randomly generate friendships, keeping new and reject dupes until
+        # we get the number of friendships we need (nm_users = avg friendships // 2)
+        
+        # keep track of good friendships and collisions
+
+        target_friendships = num_users * avg_friendships // 2
+        # if we don't divide by 2, we need to double up how much we increment total friendships
+        total_friendships = 0
+        collisions = 0
+
+        while  total_friendships < target_friendships:
+            user_id = random.randint(1, self.last_id)
+            friend_id = random.randint(1, self.last_id)
+
+            if self.add_friendship(user_id, friend_id):
+                total_friendships += 1
+            else:
+                collisions += 1
+        
+        print(f"Total collisions: {collisions}")
+
+
+        # OLD WAY
 
         # Create friendships
+        # for i in range(0, num_users):
+        #     self.add_user(f"User {i+1}")
+
+        # Generate all possible combinations
+        # possible_friendships = []
+
+        # Avoid dupes by making sure first number is smaller than second
+        # for user_id in self.users:
+        #     for friend_id in range(user_id+1, self.last_id+1):
+        #         possible_friendships.append((user_id, friend_id))
 
     def get_all_social_paths(self, user_id):
         """
@@ -57,14 +103,47 @@ class SocialGraph:
 
         The key is the friend's ID and the value is the path.
         """
-        visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+
+        # shortest route tells us breadth first
+        # extended network tells us we need to use a traversal, connected component
+
+        # how do we build the graph? we did this already
+        # Start at given user id, do a breadth first traversal, return the path to each friend
+
+        # create queue
+        qq = Queue()
+        # enqueue path
+        qq.enqueue([user_id])        
+        # create visited (already there!)
+        visited = {}  # Note that this is a dictionary, not a set
+
+        # While queue is not empty
+        while qq.size() > 0:
+            # Dequeue first path
+            path = qq.dequeue()
+            
+            vertex = path[-1]
+            # If not visited
+            if vertex not in visited:
+                # Do the thing!
+                # Add visited
+                visited[vertex] = path
+                # for each neighbor
+                for neighborino in self.friendships[vertex]:
+                    # Copy path and enqueue 
+                    new_path = path.copy()
+                    new_path.append(neighborino)
+                    qq.enqueue(new_path)
+
         return visited
 
 
 if __name__ == '__main__':
     sg = SocialGraph()
     sg.populate_graph(10, 2)
+    print("friendships")
     print(sg.friendships)
     connections = sg.get_all_social_paths(1)
+    print("connections")
     print(connections)
